@@ -58,6 +58,7 @@ bool Vector2D::operator== (const Vector2D& v2)
         }
 }
 
+
 bool Vector2D::operator!= (const Vector2D& v2)
 {
         if((this->x != v2.getX()) || (this->y != v2.getY()))
@@ -123,22 +124,26 @@ std::istream& operator>>(std::istream &is, Vector2D &v)
         v.setY(b);
         return is;
 }
-
 /*
+
 int main()
 {
-        Vector2D v1(1, 2);
+    Vector2D v1(1, 2);
     Vector2D v2(3, 4);
     Vector2D v3 = v1 + v2;
     cout << v3 << endl;
     cout << (v1 == v2) << endl;
     cout << (v1 != v2) << endl;
-        int s = v1 * v2;
-        cout << s << endl;
-        Vector2D v5 = v1 * 5;
-        Vector2D v6 = v2 - v1;
-        cout << v5 << endl;
-        cout << v6 << endl;
+    int s = v1 * v2;
+    cout << s << endl;
+    Vector2D v5 = v1 * 5;
+    Vector2D v6 = v2 - v1;
+    cout << v5 << endl;
+    cout << v6 << endl;
+    Vector2D v7 = {1,2};
+    cout << v7 << endl;
+
+
         return 0;
 }
 
