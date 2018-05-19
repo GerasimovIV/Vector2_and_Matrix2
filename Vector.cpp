@@ -1,5 +1,4 @@
-#ifndef Vector_H
-#define Vector_H
+
 
 #include <iostream>
 #include <stdio.h>
@@ -142,4 +141,3 @@ int main()
 }
 */
 
-#endif
