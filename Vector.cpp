@@ -19,10 +19,10 @@ public:
     void setY(int y);
     bool operator== (const Vector2D& v2);
     bool operator!= (const Vector2D& v2);
-    Vector2D operator+ (const Vector2D& v2);
-    Vector2D operator* (const int a);
+    Vector2D& operator+ (const Vector2D& v2);
+    Vector2D& operator* (const int a);
     int operator* (const Vector2D& v2);
-    Vector2D operator- (const Vector2D& v2);
+    Vector2D& operator- (const Vector2D& v2);
 private:
     int x;
     int y;
@@ -61,30 +61,23 @@ bool Vector2D::operator== (const Vector2D& v2)
 
 bool Vector2D::operator!= (const Vector2D& v2)
 {
-        if((this->x != v2.getX()) || (this->y != v2.getY()))
-        {
-                return true;
-        }
-        else
-        {
-                return false;
-        }
+        return !(this->operator ==(v2));
 }
-Vector2D Vector2D::operator+ (const Vector2D& v2)
+Vector2D& Vector2D::operator+ (const Vector2D& v2)
 {
-        Vector2D Vec(this->x + v2.getX(), this->y + v2.getY());
+        static Vector2D Vec(this->x + v2.getX(), this->y + v2.getY());
         return Vec;
 }
 
-Vector2D Vector2D::operator- (const Vector2D& v2)
+Vector2D& Vector2D::operator- (const Vector2D& v2)
 {
-    Vector2D Vec(this->x - v2.getX(), this->y - v2.getY());
+    static Vector2D Vec(this->x - v2.getX(), this->y - v2.getY());
     return Vec;
 }
 
-Vector2D Vector2D::operator* (const int a)
+Vector2D& Vector2D::operator* (const int a)
 {
-        Vector2D Vec(this->x * a, this->y * a);
+        static Vector2D Vec(this->x * a, this->y * a);
         return Vec;
 }
 
@@ -106,12 +99,12 @@ void Vector2D::setY(int y)
 // Перегруженный оператор, вывод вектора в формате (1; 1)
 std::ostream& operator<<(std::ostream& os, Vector2D& v)
 {
-    os <<"("<< v.getX() << "; " << v.getY() << ")";
+    os <<"|("<< v.getX() << "; " << v.getY() << ")|";
     return os;
 }
-Vector2D operator* (int a, const Vector2D& v)
+Vector2D& operator* (int a, const Vector2D& v)
 {
-        Vector2D Vec(v.getX() * a, v.getY() * a);
+        static Vector2D Vec(v.getX() * a, v.getY() * a);
         return Vec;
 }
 
@@ -142,10 +135,11 @@ int main()
     cout << v6 << endl;
     Vector2D v7 = {1,2};
     cout << v7 << endl;
+    cout << v7 + v6 << endl;
 
 
         return 0;
 }
-
 */
+
 #endif

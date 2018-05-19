@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "Vector.cpp"
-using namespace std;
+
 
 class Matrix2
 {
@@ -22,11 +22,11 @@ public:
     bool operator== (const Matrix2& v2);
     int det();
     bool operator!= (const Matrix2& v2);
-    Matrix2 operator+ (const Matrix2& v2);
-    Matrix2 operator* (const int a);
-    Matrix2 operator* (const Matrix2& v2);
-    Matrix2 operator- (const Matrix2& v2);
-    Vector2D operator* (const Vector2D& v);
+    Matrix2& operator+ (const Matrix2& v2);
+    Matrix2& operator* (const int a);
+    Matrix2& operator* (const Matrix2& v2);
+    Matrix2& operator- (const Matrix2& v2);
+    Vector2D& operator* (const Vector2D& v);
 private:
     int x;
     int y;
@@ -46,9 +46,9 @@ Matrix2::Matrix2(int x, int y, int z, int s)
 }
 Matrix2::~Matrix2(){}
 
-Vector2D Matrix2::operator* (const Vector2D& v)
+Vector2D& Matrix2::operator* (const Vector2D& v)
 {
-    Vector2D vec(this->x * v.getX() + this->y * v.getY(), this->z * v.getX() + this->s * v.getY());
+    static Vector2D vec(this->x * v.getX() + this->y * v.getY(), this->z * v.getX() + this->s * v.getY());
     return vec;
 }
 int Matrix2::getX() const
@@ -81,36 +81,29 @@ bool Matrix2::operator== (const Matrix2& v2)
 
 bool Matrix2::operator!= (const Matrix2& v2)
 {
-        if((this->x != v2.getX()) || (this->y != v2.getY()) || (this->z != v2.getZ()) || (this->s != v2.getS()))
-        {
-                return true;
-        }
-        else
-        {
-                return false;
-        }
+    return !(this->operator ==(v2));
 }
-Matrix2 Matrix2::operator+ (const Matrix2& v2)
+Matrix2& Matrix2::operator+ (const Matrix2& v2)
 {
-        Matrix2 Vec(this->x + v2.getX(), this->y + v2.getY(), this->z + v2.getZ(), this->s + v2.getS());
+        static Matrix2 Vec(this->x + v2.getX(), this->y + v2.getY(), this->z + v2.getZ(), this->s + v2.getS());
         return Vec;
 }
 
-Matrix2 Matrix2::operator- (const Matrix2& v2)
+Matrix2& Matrix2::operator- (const Matrix2& v2)
 {
-    Matrix2 Vec(this->x - v2.getX(), this->y - v2.getY(), this->z - v2.getZ(), this->s - v2.getS());
+    static Matrix2 Vec(this->x - v2.getX(), this->y - v2.getY(), this->z - v2.getZ(), this->s - v2.getS());
     return Vec;
 }
 
-Matrix2 Matrix2::operator* (const int a)
+Matrix2& Matrix2::operator* (const int a)
 {
-        Matrix2 Vec(this->x * a, this->y * a, this->z * a, this->s * a);
+        static Matrix2 Vec(this->x * a, this->y * a, this->z * a, this->s * a);
         return Vec;
 }
 
-Matrix2 Matrix2::operator* (const Matrix2& v2)
+Matrix2& Matrix2::operator* (const Matrix2& v2)
 {
-        Matrix2 Vec(this->x * v2.getX() + this->y * v2.getZ(), this->x * v2.getY() + this->y * v2.getS() , this->z * v2.getX() + this->s * v2.getZ(), this->z * v2.getY() + this->s * v2.getS());
+        static Matrix2 Vec(this->x * v2.getX() + this->y * v2.getZ(), this->x * v2.getY() + this->y * v2.getS() , this->z * v2.getX() + this->s * v2.getZ(), this->z * v2.getY() + this->s * v2.getS());
         return Vec;
 }
 
@@ -134,9 +127,9 @@ void Matrix2::setS(int s)
 }
 
 
-Matrix2 operator* (int a, const Matrix2& v)
+Matrix2& operator* (int a, const Matrix2& v)
 {
-        Matrix2 Vec(v.getX() * a, v.getY() * a, v.getZ() * a, v.getS() * a);
+        static Matrix2 Vec(v.getX() * a, v.getY() * a, v.getZ() * a, v.getS() * a);
         return Vec;
 }
 
@@ -169,17 +162,13 @@ std::ostream& operator<<(std::ostream& os, Matrix2 v)
 */
 
 // Перегруженный оператор, вывод вектора в формате (1; 1)
-std::ostream& operator<<(std::ostream& os, Matrix2 v)
+std::ostream& operator<<(std::ostream& os, Matrix2 &v)
 {
     os <<"|("<< v.getX() << "; " << v.getY() << ")" << endl;
     os <<" ("<< v.getZ() << "; " << v.getS() << ")|";
     return os;
 }
-std::ostream& operator<<(std::ostream& os, Vector2D v)
-{
-    os <<"|("<< v.getX() << "; " << v.getY() << ")|" << endl;
-    return os;
-}
+
 /*
 int main()
 {
@@ -209,7 +198,10 @@ int main()
     Matrix2 m2(0, 1, 2, 2);
 
     std::cout << "=== Test matrix ===" << std::endl;
-    cout << m1 << endl;
+    //std::cout << m1 << std::endl;
+    //std::cout << m1 << std::endl;
+    std::cout << m1 << std::endl;
+    std::cout << m2 << std::endl;
     std::cout << (m1 + m2) << std::endl;
 
     std::cout << (m1 - m2) << std::endl;
@@ -219,6 +211,10 @@ int main()
     std::cout << m2 << std::endl;
     std::cout << m1 * m2 << std::endl;
     std::cout << m1.det() << std::endl;
+    if (m1 != m2 )
+    {
+        std::cout << "NO" << std::endl;
+    }
 
     std::cout << "=== Cross test vector and matrix ===" << std::endl;
 
