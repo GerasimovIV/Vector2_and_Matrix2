@@ -48,8 +48,9 @@ Matrix2::~Matrix2(){}
 
 Vector2D& Matrix2::operator* (const Vector2D& v)
 {
-    static Vector2D vec(this->x * v.getX() + this->y * v.getY(), this->z * v.getX() + this->s * v.getY());
-    return vec;
+    Vector2D vec(this->x * v.getX() + this->y * v.getY(), this->z * v.getX() + this->s * v.getY());
+    Vector2D& link = vec;
+    return link;;
 }
 int Matrix2::getX() const
 {
@@ -85,14 +86,17 @@ bool Matrix2::operator!= (const Matrix2& v2)
 }
 Matrix2& Matrix2::operator+ (const Matrix2& v2)
 {
-        static Matrix2 Vec(this->x + v2.getX(), this->y + v2.getY(), this->z + v2.getZ(), this->s + v2.getS());
-        return Vec;
+        Matrix2 Vec(this->x + v2.getX(), this->y + v2.getY(), this->z + v2.getZ(), this->s + v2.getS());
+//        cout << this->getS()<<" "<<Vec.getS() <<" "<< v2.getS() << endl;
+        Matrix2& link = Vec;
+        return link;
 }
 
 Matrix2& Matrix2::operator- (const Matrix2& v2)
 {
-    static Matrix2 Vec(this->x - v2.getX(), this->y - v2.getY(), this->z - v2.getZ(), this->s - v2.getS());
-    return Vec;
+    Matrix2 Vec(this->x - v2.getX(), this->y - v2.getY(), this->z - v2.getZ(), this->s - v2.getS());
+    Matrix2& link = Vec;
+    return link;
 }
 
 
@@ -118,23 +122,26 @@ void Matrix2::setS(int s)
         this->s = s;
 }
 
-Matrix2& Matrix2::operator* (const int a)
+Matrix2& Matrix2::operator* ( int a)
 {
-        static Matrix2 Vec(this->getX() * a, this->getY() * a, this->getZ() * a, this->getS() * a);
-        return Vec;
+        Matrix2 Mat(this->getX() * a, this->getY() * a, this->getZ() * a, this->getS() * a);
+        Matrix2& link = Mat;
+        return link;
 }
 
 Matrix2& Matrix2::operator* (const Matrix2& v2)
 {
-        static Matrix2 Vec(this->x * v2.getX() + this->y * v2.getZ(), this->x * v2.getY() + this->y * v2.getS() , this->z * v2.getX() + this->s * v2.getZ(), this->z * v2.getY() + this->s * v2.getS());
-        return Vec;
+        Matrix2 Vec(this->x * v2.getX() + this->y * v2.getZ(), this->x * v2.getY() + this->y * v2.getS() , this->z * v2.getX() + this->s * v2.getZ(), this->z * v2.getY() + this->s * v2.getS());
+        Matrix2& link = Vec;
+        return link;
 }
 
-Matrix2& operator* (int a, const Matrix2& v)
+Matrix2& operator* (int a, const Matrix2& m)
 {
-        Matrix2 v1 = v;
-        static Matrix2 Vec = v1.operator *(a);
-        return Vec;
+        Matrix2 m0 = m;
+        Matrix2 Mat = m0.operator *(a);
+        Matrix2& link = Mat;
+        return link;
 }
 
 int Matrix2::det()
@@ -206,11 +213,14 @@ int main()
     //std::cout << m1 << std::endl;
     std::cout << m1 << std::endl;
     std::cout << m2 << std::endl;
+    Matrix2& M3 = m1 + m2;
     std::cout << (m1 + m2) << std::endl;
 
     std::cout << (m1 - m2) << std::endl;
+
+    //std::cout << -5 * m2 << std::endl;
     std::cout << m1 * 5 << std::endl;
-    std::cout <<"-"<< -5 * m2 << std::endl;
+
     std::cout << m1 << std::endl;
     std::cout << m2 << std::endl;
     std::cout << m1 * m2 << std::endl;
