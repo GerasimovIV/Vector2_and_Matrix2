@@ -116,7 +116,7 @@ std::istream& operator>>(std::istream &is, Vector2D &v)
         v.setY(b);
         return is;
 }
-
+/*
 
 int main()
 {
@@ -141,3 +141,4 @@ int main()
 }
 
 
+*/

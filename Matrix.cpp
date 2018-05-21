@@ -204,30 +204,25 @@ int main()
     Matrix2 m2(0, 1, 2, 2);
 
     std::cout << "=== Test matrix ===" << std::endl;
-    //std::cout << m1 << std::endl;
-    //std::cout << m1 << std::endl;
-    std::cout << m1 << std::endl;
-    std::cout << m2 << std::endl;
+
     std::cout << (m1 + m2) << std::endl;
-
     std::cout << (m1 - m2) << std::endl;
-
-    std::cout << -5 * m2 << std::endl;
     std::cout << m1 * 5 << std::endl;
-
+    std::cout << -5 * m2 << std::endl;
     std::cout << m1 << std::endl;
     std::cout << m2 << std::endl;
     std::cout << m1 * m2 << std::endl;
     std::cout << m1.det() << std::endl;
-    if (m1 != m2 )
-    {
-        std::cout << "NO" << std::endl;
-    }
 
     std::cout << "=== Cross test vector and matrix ===" << std::endl;
 
     Vector2D v1 = {1, 1};
     std::cout << m1 * v1 << std::endl;
+
+    if (m1 != m2)
+    {
+        std::cout << "YES" << std::endl;
+    }
 
     return 0;
 }
