@@ -22,11 +22,11 @@ public:
     bool operator== (const Matrix2& v2);
     int det();
     bool operator!= (const Matrix2& v2);
-    Matrix2& operator+ (const Matrix2& v2);
-    Matrix2& operator* (const int a);
-    Matrix2& operator* (const Matrix2& v2);
-    Matrix2& operator- (const Matrix2& v2);
-    Vector2D& operator* (const Vector2D& v);
+    Matrix2 operator+ (const Matrix2& v2);
+    Matrix2 operator* (const int a);
+    Matrix2 operator* (const Matrix2& v2);
+    Matrix2 operator- (const Matrix2& v2);
+    Vector2D operator* (const Vector2D& v);
 private:
     int x;
     int y;
@@ -46,11 +46,19 @@ Matrix2::Matrix2(int x, int y, int z, int s)
 }
 Matrix2::~Matrix2(){}
 
-Vector2D& Matrix2::operator* (const Vector2D& v)
+// Перегруженный оператор, вывод вектора в формате (1; 1)
+std::ostream& operator<<(std::ostream& os, Matrix2 const &v2)
+{
+    os <<"|("<< v2.getX() << "; " << v2.getY() << ")" << endl;
+    os <<" ("<< v2.getZ() << "; " << v2.getS() << ")|";
+    return os;
+}
+
+
+Vector2D Matrix2::operator* (const Vector2D& v)
 {
     Vector2D vec(this->x * v.getX() + this->y * v.getY(), this->z * v.getX() + this->s * v.getY());
-    Vector2D& link = vec;
-    return link;;
+    return vec;
 }
 int Matrix2::getX() const
 {
@@ -84,19 +92,16 @@ bool Matrix2::operator!= (const Matrix2& v2)
 {
     return !(this->operator ==(v2));
 }
-Matrix2& Matrix2::operator+ (const Matrix2& v2)
+Matrix2 Matrix2::operator + (const Matrix2& v2)
 {
         Matrix2 Vec(this->x + v2.getX(), this->y + v2.getY(), this->z + v2.getZ(), this->s + v2.getS());
-//        cout << this->getS()<<" "<<Vec.getS() <<" "<< v2.getS() << endl;
-        Matrix2& link = Vec;
-        return link;
+        return Vec;
 }
 
-Matrix2& Matrix2::operator- (const Matrix2& v2)
+Matrix2 Matrix2::operator- (const Matrix2& v2)
 {
     Matrix2 Vec(this->x - v2.getX(), this->y - v2.getY(), this->z - v2.getZ(), this->s - v2.getS());
-    Matrix2& link = Vec;
-    return link;
+    return Vec;
 }
 
 
@@ -122,26 +127,23 @@ void Matrix2::setS(int s)
         this->s = s;
 }
 
-Matrix2& Matrix2::operator* ( int a)
+Matrix2 Matrix2::operator* ( int a)
 {
         Matrix2 Mat(this->getX() * a, this->getY() * a, this->getZ() * a, this->getS() * a);
-        Matrix2& link = Mat;
-        return link;
+        return Mat;
 }
 
-Matrix2& Matrix2::operator* (const Matrix2& v2)
+Matrix2 Matrix2::operator* (const Matrix2& v2)
 {
         Matrix2 Vec(this->x * v2.getX() + this->y * v2.getZ(), this->x * v2.getY() + this->y * v2.getS() , this->z * v2.getX() + this->s * v2.getZ(), this->z * v2.getY() + this->s * v2.getS());
-        Matrix2& link = Vec;
-        return link;
+        return Vec;
 }
 
-Matrix2& operator* (int a, const Matrix2& m)
+Matrix2 operator* (int a, const Matrix2& m)
 {
         Matrix2 m0 = m;
         Matrix2 Mat = m0.operator *(a);
-        Matrix2& link = Mat;
-        return link;
+        return Mat;
 }
 
 int Matrix2::det()
@@ -172,13 +174,6 @@ std::ostream& operator<<(std::ostream& os, Matrix2 v)
 }
 */
 
-// Перегруженный оператор, вывод вектора в формате (1; 1)
-std::ostream& operator<<(std::ostream& os, Matrix2 &v)
-{
-    os <<"|("<< v.getX() << "; " << v.getY() << ")" << endl;
-    os <<" ("<< v.getZ() << "; " << v.getS() << ")|";
-    return os;
-}
 
 /*
 int main()
@@ -213,12 +208,11 @@ int main()
     //std::cout << m1 << std::endl;
     std::cout << m1 << std::endl;
     std::cout << m2 << std::endl;
-    Matrix2& M3 = m1 + m2;
     std::cout << (m1 + m2) << std::endl;
 
     std::cout << (m1 - m2) << std::endl;
 
-    //std::cout << -5 * m2 << std::endl;
+    std::cout << -5 * m2 << std::endl;
     std::cout << m1 * 5 << std::endl;
 
     std::cout << m1 << std::endl;

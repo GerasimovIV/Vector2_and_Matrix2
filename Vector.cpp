@@ -96,7 +96,7 @@ void Vector2D::setY(int y)
 }
 
 // Перегруженный оператор, вывод вектора в формате (1; 1)
-std::ostream& operator<<(std::ostream& os, Vector2D& v)
+std::ostream& operator<<(std::ostream& os,const Vector2D& v)
 {
     os <<"|("<< v.getX() << "; " << v.getY() << ")|";
     return os;
