@@ -18,10 +18,10 @@ public:
     void setY(int y);
     bool operator== (const Vector2D& v2);
     bool operator!= (const Vector2D& v2);
-    Vector2D& operator+ (const Vector2D& v2);
-    Vector2D& operator* (const int a);
+    Vector2D operator+ (const Vector2D& v2);
+    Vector2D operator* (const int a);
     int operator* (const Vector2D& v2);
-    Vector2D& operator- (const Vector2D& v2);
+    Vector2D operator- (const Vector2D& v2);
 private:
     int x;
     int y;
@@ -62,19 +62,19 @@ bool Vector2D::operator!= (const Vector2D& v2)
 {
         return !(this->operator ==(v2));
 }
-Vector2D& Vector2D::operator+ (const Vector2D& v2)
+Vector2D Vector2D::operator+ (const Vector2D& v2)
 {
         static Vector2D Vec(this->x + v2.getX(), this->y + v2.getY());
         return Vec;
 }
 
-Vector2D& Vector2D::operator- (const Vector2D& v2)
+Vector2D Vector2D::operator- (const Vector2D& v2)
 {
     static Vector2D Vec(this->x - v2.getX(), this->y - v2.getY());
     return Vec;
 }
 
-Vector2D& Vector2D::operator* (const int a)
+Vector2D Vector2D::operator* (const int a)
 {
         static Vector2D Vec(this->x * a, this->y * a);
         return Vec;
@@ -116,7 +116,7 @@ std::istream& operator>>(std::istream &is, Vector2D &v)
         v.setY(b);
         return is;
 }
-/*
+
 
 int main()
 {
@@ -139,5 +139,5 @@ int main()
 
         return 0;
 }
-*/
+
 
