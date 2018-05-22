@@ -64,19 +64,19 @@ bool Vector2D::operator!= (const Vector2D& v2)
 }
 Vector2D Vector2D::operator+ (const Vector2D& v2)
 {
-        static Vector2D Vec(this->x + v2.getX(), this->y + v2.getY());
+        Vector2D Vec(this->x + v2.getX(), this->y + v2.getY());
         return Vec;
 }
 
 Vector2D Vector2D::operator- (const Vector2D& v2)
 {
-    static Vector2D Vec(this->x - v2.getX(), this->y - v2.getY());
+    Vector2D Vec(this->x - v2.getX(), this->y - v2.getY());
     return Vec;
 }
 
 Vector2D Vector2D::operator* (const int a)
 {
-        static Vector2D Vec(this->x * a, this->y * a);
+        Vector2D Vec(this->x * a, this->y * a);
         return Vec;
 }
 
@@ -101,9 +101,9 @@ std::ostream& operator<<(std::ostream& os,const Vector2D& v)
     os <<"|("<< v.getX() << "; " << v.getY() << ")|";
     return os;
 }
-Vector2D& operator* (int a, const Vector2D& v)
+Vector2D operator* (int a, const Vector2D& v)
 {
-        static Vector2D Vec(v.getX() * a, v.getY() * a);
+        Vector2D Vec(v.getX() * a, v.getY() * a);
         return Vec;
 }
 
